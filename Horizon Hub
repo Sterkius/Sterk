@@ -254,6 +254,11 @@ end)
 
 local Tab = Window:NewTab("Change Logs")
 local ThirdSection = Tab:NewSection("Change Logs Menu")
+ThirdSection:NewLabel("(+) Added Crash Scripts 27/06/2022")
+ThirdSection:NewLabel("(-) Removed Some Broken Scripts 27/06/2022")
+ThirdSection:NewLabel("(+) Cleaned Up the UI 27/06/2022")
+ThirdSection:NewLabel("(+) Added Spawner 04/06/2022")
+ThirdSection:NewLabel("(+) Added Health Settings 04/06/2022")
 
 local Tab = Window:NewTab("Credits")
 local SecondSection = Tab:NewSection("Credits Menu")
