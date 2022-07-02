@@ -213,8 +213,8 @@ TabNameSection:NewSlider("Players Health", "Set Players Health", 500, 10, functi
     game.Workspace[game.Players.LocalPlayer.Name].Humanoid.Health = s
 end)
 
-local Tab = Window:NewTab("Sever Killer")
-local SecondSection = Tab:NewSection("Sever Killer")
+local Tab = Window:NewTab("Server Killer")
+local SecondSection = Tab:NewSection("Server Killer")
 SecondSection:NewButton("Sound Crash", "Spams Sound to Crash sever (Works in some games)", function()
     local Players = game:GetService("Players")
 
@@ -254,6 +254,7 @@ end)
 
 local Tab = Window:NewTab("Change Logs")
 local ThirdSection = Tab:NewSection("Change Logs Menu")
+ThirdSection:NewLabel("(+) Cleaned Up the UI v2  02/07/2022")
 ThirdSection:NewLabel("(+) Added Crash Scripts 27/06/2022")
 ThirdSection:NewLabel("(-) Removed Some Broken Scripts 27/06/2022")
 ThirdSection:NewLabel("(+) Cleaned Up the UI 27/06/2022")
