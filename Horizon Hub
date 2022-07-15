@@ -76,7 +76,7 @@ wait(1)
 h.WalkSpeed = 16.2
 end)
 
-TabNameSection:NewButton("Insane Mode", "Sword 1 shots(Item must be put in slot 1), You are also in God Mode", function()
+TabNameSection:NewButton("Insane Mode", "Sword 1 shots(Item must be put in slot 1), + God Mode", function()
     local lp = game:GetService("Players").LocalPlayer
 local remote = lp:WaitForChild("GwyneddEventUn")
 
