@@ -45,6 +45,108 @@ TabNameSection:NewButton("Kill Aura", "Click F to kill all players in area (Swor
             end
         end)
 end)
+
+TabNameSection:NewButton("Movement", "Increases speed but looks real, and has no jump cooldown", function()
+    local h = game.Players.LocalPlayer.Character.Humanoid
+local current_ws = 16
+for i,v in pairs(getconnections(h.Changed)) do v:Disable() end
+local mt = getrawmetatable(game)
+setreadonly(mt,false)
+local backup = mt.index
+local backup2 = mt.newindex
+mt.index = newcclosure(function(tbl,idx)
+if checkcaller() then return backup(tbl,idx) end
+if tbl == h and idx == "WalkSpeed" then
+return current_ws
+end
+return backup(tbl,idx)
+end)
+mt.newindex = newcclosure(function(tbl,idx,val)
+if checkcaller() then return backup2(tbl,idx,val) end
+if tbl == h and idx == "WalkSpeed" then
+current_ws = val
+return os.time()
+end
+return backup2(tbl,idx,val)
+end)
+setreadonly(mt,true)
+
+wait(1)
+
+h.WalkSpeed = 16.2
+end)
+
+TabNameSection:NewButton("One Shot", "Item must be put in slot 1, Also breaks walls and anything with health", function()
+    local lp = game:GetService("Players").LocalPlayer
+local remote = lp:WaitForChild("GwyneddEventUn")
+
+if lp:FindFirstChild("Armor") then
+    remote:FireServer(
+        "damageDeployable",
+        {
+            PhysicalHealth = lp.Armor
+        },
+        -100000000
+    )
+end
+
+lp.CharacterAdded:Connect(function()
+    remote:FireServer(
+        "damageDeployable",
+        {
+            PhysicalHealth = lp:WaitForChild("Armor")
+        },
+        -100000000
+    )
+end)
+
+local spoof = {
+    Name = "1",
+    Configuration = {
+        Damage1 = {Value = 100000000},
+        Damage2 = {Value = 100000000},
+        EnduranceDamage1 = {Value = 100000000},
+        EnduranceDamage2 = {Value = 100000000}
+    }
+}
+
+local function spoofHandler(args)
+    if args[1] == "dealDamage" or args[1] == "dealEnduranceDamage" then
+        spoof.Parent = lp.Character
+        args[3] = spoof
+
+        return args
+    elseif args[1] == "damageDeployable" then
+        args[3] = 100000000
+
+        return args
+    end
+
+    return false
+end
+
+local meta = getrawmetatable(game)
+setreadonly(meta, false)
+
+local old
+old = replaceclosure(meta.__namecall, function(self, ...) 
+    local method = getnamecallmethod()
+    local args = {...}
+
+    if method == "FireServer" and self == remote and lp.Character then
+        local thing = spoofHandler(args)
+
+        if thing then
+            return old(self, unpack(thing))
+        end
+    end
+
+    return old(self, ...)
+end)
+
+--print("God mode and infinite damage loaded!")
+end)
+
 local TabNameSection = Tab:NewSection("Insane Menu")
 
  TabNameSection:NewButton("Shield Bypass", "This is to open a op dr consul menu", function()
